@@ -1,4 +1,4 @@
-name: flutter_midi_client
+name: sol
 description: A Flutter app to upload music sheet images and play MIDI.
 publish_to: "none"
 
@@ -14,6 +14,7 @@ dependencies:
   http: ^1.2.1       
   path: ^1.9.0      # http package needs this sometimes implicitly
   flutter_midi_pro: ^3.1.4
+  flutter_dotenv: ^5.2.1
   #cupertino_icons: ^1.0.6 # Usually included by default
 
 dev_dependencies:
