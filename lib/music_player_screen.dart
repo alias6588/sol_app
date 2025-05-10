@@ -3,7 +3,7 @@ import 'package:flutter_midi_pro/flutter_midi_pro.dart'; // Import flutter_midi_
 import 'package:flutter/services.dart'
     show rootBundle; // For loading assets (soundfont)
 import 'note_event.dart'; // Import the NoteEvent class
-import 'music_sheet_view.dart'; // Import the custom music sheet view
+import 'music_sheet_view.dart'; // Import the custom music sheet view - Ensure this file exists and is correct
 
 class MusicPlayerScreen extends StatefulWidget {
   // Receive the list of NoteEvent objects
@@ -54,8 +54,8 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
       // If not specified, it usually defaults to bank 0, program 0 (often a piano).
       // Replace 0 and 0 with the desired bank and program numbers from your soundfont documentation.
       // Example: To load Acoustic Grand Piano (Program 0, Bank 0 in GM):
-      _soundfontId =
-          await _flutterMidiPro.loadSoundfont(path: sf2Path, bank: 0, program: 0);
+      _soundfontId = await _flutterMidiPro.loadSoundfont(
+          path: sf2Path, bank: 0, program: 0);
 
       // If you don't specify bank/program, it uses default (usually bank 0, program 0):
       // _soundfontId = await _flutterMidiPro.loadSoundfont(sf2Path);
@@ -103,7 +103,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
       return;
     }
     if (_isLoadingSoundfont) {
-      // Prevent playing while SoundFont is loading
+      // Prevent playing while Soundfont is loading
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(

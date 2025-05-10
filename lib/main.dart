@@ -11,11 +11,14 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'پخش کننده نت موسیقی', // Music Sheet Player
+      title: 'Sol !', // Music Sheet Player
       theme: ThemeData(
         primarySwatch: Colors.blue,
         useMaterial3: true,

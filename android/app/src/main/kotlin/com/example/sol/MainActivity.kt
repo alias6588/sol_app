@@ -1,4 +1,4 @@
-package com.example.flutter_midi_client
+package com.example.sol
 
 import io.flutter.embedding.android.FlutterActivity
 
