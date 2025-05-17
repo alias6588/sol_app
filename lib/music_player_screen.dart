@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_pro/flutter_midi_pro.dart'; // Import flutter_midi_pro
-import 'package:flutter/services.dart'
-    show rootBundle; // For loading assets (soundfont)
+// For loading assets (soundfont)
 import 'note_event.dart'; // Import the NoteEvent class
 import 'music_sheet_view.dart'; // Import the custom music sheet view - Ensure this file exists and is correct
 
@@ -203,7 +202,6 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
               Expanded(
                 child: MusicSheetView(
                   noteEvents: widget.noteEvents,
-                  currentlyPlayingIndex: _currentlyPlayingIndex,
                 ),
               ),
               SizedBox(height: 20),
