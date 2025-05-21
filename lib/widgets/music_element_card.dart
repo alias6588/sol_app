@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sol/models/music_element.dart';
+import 'package:sol/models/music_elements/abstracts/musice_element.dart';
 
 class MusicElementCard extends StatelessWidget {
 

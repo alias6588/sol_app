@@ -1,11 +1,14 @@
-import "music_element.dart";
+import "package:sol/models/music_elements/abstracts/musice_element.dart";
+import "package:sol/models/music_elements/abstracts/playable_music_element.dart";
 
 class Measure {
   final int measureNumber;
   final List<MusicElement> elements;
 
   List<MusicElement> get cleanElements =>
-    elements.where((e) => e.type != "Other").toList();
+      elements.where((e) => e.type != "Other").toList();
+  List<PlayableMusicElement> get playableElements =>
+      elements.whereType<PlayableMusicElement>().toList();
 
   Measure({required this.measureNumber, required this.elements});
 
@@ -16,9 +19,4 @@ class Measure {
       );
 
   set isPlaying(bool isPlaying) {}
-
-  Map<String, dynamic> toJson() => {
-        'measure_number': measureNumber,
-        'elements': List<dynamic>.from(elements.map((x) => x.toJson())),
-      };
 }

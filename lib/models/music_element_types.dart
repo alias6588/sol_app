@@ -8,8 +8,8 @@ class MusicElementTypes {
   static const String dynamics = 'dynamics';
   static const String articulation = 'articulation';
   static const String measure = 'measure';
-  static const String clef = 'Clef';
-  static const String keySignature = 'KeySignature';
-  static const String timeSignature = 'TimeSignature';
-  static const String other = 'Other';
+  static const String clef = 'clef';
+  static const String keySignature = 'keysignature';
+  static const String timeSignature = 'timesignature';
+  static const String other = 'other';
 }

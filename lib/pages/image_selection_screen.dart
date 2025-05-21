@@ -28,7 +28,8 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
     if (_backendUrl == null || _backendUrl!.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
-          _statusMessage = 'آدرس سرور تنظیم نشده است.'; // Backend URL is not set.
+          _statusMessage =
+              'آدرس سرور تنظیم نشده است.'; // Backend URL is not set.
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -82,8 +83,9 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
           // Processing was successful
           List<dynamic> decodedData = jsonDecode(response.body);
           // Convert List<dynamic> to List<NoteEvent>
-          List<measure_model.Measure> measures =
-              decodedData.map((data) => measure_model.Measure.fromJson(data)).toList();
+          List<measure_model.Measure> measures = decodedData
+              .map((data) => measure_model.Measure.fromJson(data))
+              .toList();
 
           setState(() {
             _statusMessage =
@@ -98,9 +100,6 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
             ),
           );
         } else {
-          // Server-side error
-          print('Server Error: ${response.statusCode}');
-          print('Server Response: ${response.body}');
           String errorMessage =
               'خطا در پردازش فایل در سرور.'; // Error processing file on server.
           try {
