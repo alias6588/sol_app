@@ -5,8 +5,8 @@ import 'package:file_picker/file_picker.dart'; // For picking files
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http; // For HTTP requests
 import 'package:path/path.dart' as p; // For getting basename
-import 'music_player_screen.dart'; // Import the music player screen
-import 'note_event.dart'; // Import the NoteEvent class
+import 'package:sol/models/measure.dart' as measure_model show Measure;
+import 'package:sol/pages/music_score_screen.dart';
 
 class ImageSelectionScreen extends StatefulWidget {
   @override
@@ -82,8 +82,8 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
           // Processing was successful
           List<dynamic> decodedData = jsonDecode(response.body);
           // Convert List<dynamic> to List<NoteEvent>
-          List<NoteEvent> noteEvents =
-              decodedData.map((data) => NoteEvent.fromJson(data)).toList();
+          List<measure_model.Measure> measures =
+              decodedData.map((data) => measure_model.Measure.fromJson(data)).toList();
 
           setState(() {
             _statusMessage =
@@ -94,7 +94,7 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MusicPlayerScreen(noteEvents: noteEvents),
+              builder: (context) => MusicScoreScreen(measures: measures),
             ),
           );
         } else {
