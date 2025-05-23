@@ -12,7 +12,7 @@ abstract class MusicElement {
 
   MusicElement(this.type, this.value, this.representation, this.measureOffset);
   factory MusicElement.fromJson(Map<String, dynamic> json) {
-    var type = json['type'].toString().toLowerCase();
+    var type = json['type']?.toString().toLowerCase();
     switch (type) {
       case MusicElementTypes.note:
         return Note.fromJson(json);
@@ -26,7 +26,7 @@ abstract class MusicElement {
       case MusicElementTypes.other:
         return Symbol.fromJson(json);
       default:
-        throw Exception('Unknown type: ${json['type']}');
+        throw Exception('Unknown type: ${type}');
     }
   }
 }

@@ -4,9 +4,9 @@ class Symbol extends MusicElement {
   Symbol(super.type, super.value, super.representation, super.measureOffset);
 
   static Symbol fromJson(Map<String, dynamic> json) => Symbol(
-        json['type'].toString(),
-        json['value'].toString(),
-        json['representation'].toString(),
+        json['type'],
+        json['value'],
+        json['representation'],
         json['measureOffset']?.toDouble(),
       );
 

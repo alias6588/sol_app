@@ -7,14 +7,20 @@ class Rest extends PlayableMusicElement {
   @override
   get name => 'Rest';
 
-  static Rest fromJson(Map<String, dynamic> json) => Rest(
-        json['type'],
-        json['value'],
-        json['representation'],
-        json['measureOffset']?.toDouble(),
-        json['pitch'],
-        json['duration']?.toDouble(),
-        json['durationType'],
-        json['name'],
-      );
+  static Rest fromJson(Map<String, dynamic> json) {
+    var type = json['type'];
+    if (type == null) {
+      throw Exception('Invalid JSON: $json');
+    }
+    return Rest(
+      json['type'],
+      json['value'],
+      json['representation'],
+      json['measureOffset']?.toDouble(),
+      json['pitch'],
+      json['duration']?.toDouble(),
+      json['durationType'],
+      json['name'] ?? type,
+    );
+  }
 }
