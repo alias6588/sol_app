@@ -24,7 +24,7 @@ class MusicPlayer extends ChangeNotifier {
         if (!_isPlaying) break;
         element.play();
         final duration =
-            element.duration! > 0 ? element.duration! : beatDurationMs;
+            element.duration > 0 ? element.duration : beatDurationMs;
         await Future.delayed(Duration(milliseconds: duration.round()));
         element.stop();
       }
