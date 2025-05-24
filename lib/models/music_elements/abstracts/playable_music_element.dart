@@ -19,7 +19,7 @@ abstract class PlayableMusicElement extends MusicElement {
   void play() {
     print('Playing note: $name for $duration');
   }
-
+  
   void stop() {
     print('stoped note: $name');
   }

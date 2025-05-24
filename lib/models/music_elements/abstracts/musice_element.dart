@@ -26,7 +26,7 @@ abstract class MusicElement {
       case MusicElementTypes.other:
         return Symbol.fromJson(json);
       default:
-        throw Exception('Unknown type: ${type}');
+        throw Exception('Unknown type: $type');
     }
   }
 }

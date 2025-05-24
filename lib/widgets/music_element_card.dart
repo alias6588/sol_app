@@ -5,7 +5,7 @@ class MusicElementCard extends StatelessWidget {
 
   final MusicElement musicElement;
 
-  const MusicElementCard({Key? key, required this.musicElement}) : super(key: key);
+  const MusicElementCard({super.key, required this.musicElement});
 
   @override
   Widget build(BuildContext context) {

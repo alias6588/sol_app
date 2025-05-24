@@ -5,11 +5,11 @@ class BpmControl extends StatefulWidget {
   final int maxBpm;
   final ValueChanged<int>? onBpmChanged; // <---
   const BpmControl({
-    Key? key,
+    super.key,
     this.minBpm = 30,
     this.maxBpm = 300,
     this.onBpmChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<BpmControl> createState() => _BpmControlState();

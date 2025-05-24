@@ -9,6 +9,8 @@ import 'package:sol/models/measure.dart' as measure_model show Measure;
 import 'package:sol/pages/music_score_screen.dart';
 
 class ImageSelectionScreen extends StatefulWidget {
+  const ImageSelectionScreen({super.key});
+
   @override
   _ImageSelectionScreenState createState() => _ImageSelectionScreenState();
 }
@@ -123,7 +125,6 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
         }
       } catch (e) {
         // Network or other errors
-        print("Error uploading file: $e");
         setState(() {
           _isLoading = false;
           _statusMessage =

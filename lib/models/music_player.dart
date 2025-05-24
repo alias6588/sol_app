@@ -5,7 +5,6 @@ import 'package:sol/models/music_elements/abstracts/playable_music_element.dart'
 
 class MusicPlayer extends ChangeNotifier {
   final List<Measure> measures;
-  Timer? _timer;
   bool _isPlaying = false;
 
   MusicPlayer({required this.measures});
@@ -23,21 +22,18 @@ class MusicPlayer extends ChangeNotifier {
       for (final PlayableMusicElement element in measure.playableElements) {
         if (!_isPlaying) break;
         element.play();
-        final duration =
-            element.duration > 0 ? element.duration : beatDurationMs;
-        await Future.delayed(Duration(milliseconds: duration.round()));
+        final durationMs = element.duration * beatDurationMs;
+        await Future.delayed(Duration(milliseconds: durationMs.round()));
         element.stop();
       }
       if (!_isPlaying) break;
     }
 
-    _isPlaying = false;
-    notifyListeners();
+    stop();
   }
 
   void stop() {
     _isPlaying = false;
-    _timer?.cancel();
     notifyListeners();
   }
 }

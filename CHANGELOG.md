@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unrealized]
+
+## Add
+
+- add stop button
+- add music player model in heart of logics to control play scanned music
+- add abastract class of music elements and corresponding subcalsses(Note, Rest, Clef, TimeSigniture, KeySigniture)
+- add bpmController custom widget
+
 ## [1.0.1.0] - 2025-05-21
 
 ### Added

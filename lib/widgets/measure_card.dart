@@ -5,7 +5,7 @@ import 'package:sol/widgets/music_element_card.dart';
 class MeasureCard extends StatelessWidget {
   final Measure measure;
 
-  const MeasureCard({Key? key, required this.measure}) : super(key: key);
+  const MeasureCard({super.key, required this.measure});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,6 @@ class MeasureCard extends StatelessWidget {
                   // Assuming each element has a 'noteName' property
                   return MusicElementCard(musicElement: element);
                   // ignore: dead_code
-                  ;
                 }).toList(),
               ),
             ),
