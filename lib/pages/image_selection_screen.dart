@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http; // For HTTP requests
 import 'package:path/path.dart' as p; // For getting basename
 import 'package:sol/models/measure.dart' as measure_model show Measure;
-import 'package:sol/pages/music_score_screen.dart';
+import 'package:sol/pages/music_play_screen.dart';
 
 class ImageSelectionScreen extends StatefulWidget {
   const ImageSelectionScreen({super.key});
@@ -98,7 +98,7 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MusicScoreScreen(measures: measures),
+              builder: (context) => MusicPlayScreen(measures: measures),
             ),
           );
         } else {

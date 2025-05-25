@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:sol/models/measure.dart';
-import 'package:sol/models/music_player.dart';
+import 'package:sol/models/music_player_notifier.dart';
 import 'package:sol/widgets/bpm_control.dart';
 import 'package:sol/widgets/measure_card.dart';
 
 // Custom widget to display a measure
 
-class MusicScoreScreen extends StatefulWidget {
-  const MusicScoreScreen({super.key, required this.measures});
+class MusicPlayScreen extends StatefulWidget {
+  const MusicPlayScreen({super.key, required this.measures});
 
   // Simulate fetching required measures
   final List<Measure> measures;
 
   @override
-  State<MusicScoreScreen> createState() => _MusicScoreScreenState();
+  State<MusicPlayScreen> createState() => _MusicPlayScreenState();
 }
 
-class _MusicScoreScreenState extends State<MusicScoreScreen> {
+class _MusicPlayScreenState extends State<MusicPlayScreen> {
   int _currentBpm = 60; // Default BPM
-  late final MusicPlayer _musicPlayer;
+  late final MusicPlayNotifier _musicPlayNotifier;
 
   @override
   void initState() {
     super.initState();
-    _musicPlayer = MusicPlayer(measures: widget.measures);
-    _musicPlayer.addListener(_onMusicPlayerStateChanged);
+    _musicPlayNotifier = MusicPlayNotifier(measures: widget.measures);
+    _musicPlayNotifier.addListener(_onMusicPlayerStateChanged);
   }
 
   @override
   void dispose() {
-    _musicPlayer.removeListener(_onMusicPlayerStateChanged);
-    _musicPlayer.dispose(); // Important to clean up the notifier
+    _musicPlayNotifier.removeListener(_onMusicPlayerStateChanged);
+    _musicPlayNotifier.dispose(); // Important to clean up the notifier
     super.dispose();
   }
 
@@ -71,10 +71,10 @@ class _MusicScoreScreenState extends State<MusicScoreScreen> {
             mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
             children: [
               ElevatedButton(
-                onPressed: _musicPlayer.isPlaying
+                onPressed: _musicPlayNotifier.isPlaying
                     ? null // Disable button if already playing
                     : () {
-                        _musicPlayer.play(bpm: _currentBpm);
+                        _musicPlayNotifier.play(bpm: _currentBpm);
                       },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
@@ -84,9 +84,9 @@ class _MusicScoreScreenState extends State<MusicScoreScreen> {
               ),
               const SizedBox(width: 16), // Add some spacing
               ElevatedButton(
-                onPressed: _musicPlayer.isPlaying
+                onPressed: _musicPlayNotifier.isPlaying
                     ? () {
-                        _musicPlayer.stop();
+                        _musicPlayNotifier.stop();
                       }
                     : null, // Disable if not playing
                 style: ElevatedButton.styleFrom(

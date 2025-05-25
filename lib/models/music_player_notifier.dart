@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:sol/models/measure.dart';
 import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 
-class MusicPlayer extends ChangeNotifier {
+class MusicPlayNotifier extends ChangeNotifier {
   final List<Measure> measures;
   bool _isPlaying = false;
 
-  MusicPlayer({required this.measures});
+  MusicPlayNotifier({required this.measures});
 
   bool get isPlaying => _isPlaying;
 
