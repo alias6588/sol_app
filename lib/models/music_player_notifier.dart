@@ -19,6 +19,8 @@ class MusicPlayNotifier extends ChangeNotifier {
     final beatDurationMs = (60000 / bpm).round();
 
     for (final measure in measures) {
+      measure.isPlaying = true;
+      notifyListeners();
       for (final PlayableMusicElement element in measure.playableElements) {
         if (!_isPlaying) break;
         element.play();
@@ -26,6 +28,8 @@ class MusicPlayNotifier extends ChangeNotifier {
         await Future.delayed(Duration(milliseconds: durationMs.round()));
         element.stop();
       }
+      measure.isPlaying = false;
+      notifyListeners();
       if (!_isPlaying) break;
     }
 
@@ -35,5 +39,11 @@ class MusicPlayNotifier extends ChangeNotifier {
   void stop() {
     _isPlaying = false;
     notifyListeners();
+  }
+
+  void initialize(List<Measure> measures) {
+    this.measures.clear();
+    this.measures.addAll(measures);
+    notifyListeners();  
   }
 }

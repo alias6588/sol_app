@@ -5,6 +5,8 @@ class Measure {
   final int measureNumber;
   final List<MusicElement> elements;
 
+  var isPlaying = false;
+
   List<MusicElement> get cleanElements =>
       elements.where((e) => e.type != "Other").toList();
   List<PlayableMusicElement> get playableElements =>
@@ -17,6 +19,4 @@ class Measure {
         elements: List<MusicElement>.from(
             json['elements'].map((x) => MusicElement.fromJson(x))),
       );
-
-  set isPlaying(bool isPlaying) {}
 }
