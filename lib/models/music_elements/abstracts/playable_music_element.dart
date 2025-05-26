@@ -5,6 +5,7 @@ abstract class PlayableMusicElement extends MusicElement {
   final double duration;
   final String durationType;
   final String name;
+  bool isPlaying = false;
 
   PlayableMusicElement(
       super.type,
@@ -18,10 +19,12 @@ abstract class PlayableMusicElement extends MusicElement {
 
   void play() {
     print('Playing note: $name for $duration');
+    isPlaying = true;
   }
   
   void stop() {
     print('stoped note: $name');
+    isPlaying = false;
   }
 
   @override

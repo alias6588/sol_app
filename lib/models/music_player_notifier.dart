@@ -24,9 +24,11 @@ class MusicPlayNotifier extends ChangeNotifier {
       for (final PlayableMusicElement element in measure.playableElements) {
         if (!_isPlaying) break;
         element.play();
+        notifyListeners();
         final durationMs = element.duration * beatDurationMs;
         await Future.delayed(Duration(milliseconds: durationMs.round()));
         element.stop();
+        notifyListeners();
       }
       measure.isPlaying = false;
       notifyListeners();
@@ -44,6 +46,18 @@ class MusicPlayNotifier extends ChangeNotifier {
   void initialize(List<Measure> measures) {
     this.measures.clear();
     this.measures.addAll(measures);
-    notifyListeners();  
+    notifyListeners();
+  }
+  
+
+  getElement({required int measureIndex, required int elementIndex}) {
+    if (measureIndex < 0 || measureIndex >= measures.length) {
+      throw RangeError('Measure index out of range');
+    }
+    final measure = measures[measureIndex];
+    if (elementIndex < 0 || elementIndex >= measure.playableElements.length) {
+      throw RangeError('Element index out of range');
+    }
+    return measure.playableElements[elementIndex];
   }
 }
