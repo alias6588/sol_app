@@ -144,14 +144,14 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
                             _statusMessage =
                                 'پردازش کامل شد. آماده پخش.'; // Processing complete. Ready to play.
                           });
+
                           Provider.of<MusicPlayNotifier>(context, listen: false)
                               .initialize(measures);
 
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MusicPlayScreen(measures: measures),
+                              builder: (context) => MusicPlayScreen(),
                             ),
                           );
                         } on SelectFileException catch (e) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sol/models/measure.dart';
 import 'package:sol/models/music_player_notifier.dart';
 import 'package:sol/widgets/bpm_control.dart';
 import 'package:sol/widgets/measure_card.dart';
@@ -8,10 +7,11 @@ import 'package:provider/provider.dart';
 // Custom widget to display a measure
 
 class MusicPlayScreen extends StatefulWidget {
-  const MusicPlayScreen({super.key, required this.measures});
+  const MusicPlayScreen({
+    super.key,
+  });
 
   // Simulate fetching required measures
-  final List<Measure> measures;
 
   @override
   State<MusicPlayScreen> createState() => _MusicPlayScreenState();
@@ -24,8 +24,6 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
   void initState() {
     super.initState();
     // Initialize the MusicPlayNotifier with the provided measures
-    Provider.of<MusicPlayNotifier>(context, listen: false)
-        .initialize(widget.measures);
   }
 
   @override

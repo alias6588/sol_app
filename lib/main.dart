@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:sol/models/music_player_notifier.dart';
 import 'pages/image_selection_screen.dart'; // Import the image selection screen
