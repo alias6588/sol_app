@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sol/models/measure.dart';
-import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 import 'package:sol/models/music_player_notifier.dart';
 import 'package:sol/widgets/music_element_card.dart';
 
@@ -35,13 +34,10 @@ class MeasureCard extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: measure.playableElements
-                        .asMap()
-                        .entries
-                        .map((entry) =>
+                        .map((elemet) =>
                                 // Assuming each element has a 'noteName' property
                                 MusicElementCard(
-                                  measureIndex: measureIndex,
-                                  musicElementIndex: entry.key,
+                                  musicElement: elemet,
                                 )
                             // ignore: dead_code
                             )
