@@ -32,8 +32,8 @@ class MusicElementCard extends StatelessWidget {
           ),
         );
       },
-      selector: (context, musicPlay) => musicPlay.measures[measureIndex]
-          .playableElements[musicElementIndex],
+      selector: (context, musicPlay) => musicPlay.getElement(
+          measureIndex: measureIndex, elementIndex: musicElementIndex),
     );
   }
 }

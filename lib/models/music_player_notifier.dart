@@ -48,7 +48,6 @@ class MusicPlayNotifier extends ChangeNotifier {
     this.measures.addAll(measures);
     notifyListeners();
   }
-  
 
   getElement({required int measureIndex, required int elementIndex}) {
     if (measureIndex < 0 || measureIndex >= measures.length) {
