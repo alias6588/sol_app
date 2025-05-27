@@ -19,17 +19,39 @@ class MusicPlayScreen extends StatefulWidget {
 
 class _MusicPlayScreenState extends State<MusicPlayScreen> {
   int _currentBpm = 60; // Default BPM
+  static const double _cardWidth = 200.0;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     // Initialize the MusicPlayNotifier with the provided measures
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final musicPlayNotifier =
+          Provider.of<MusicPlayNotifier>(context, listen: false);
+      musicPlayNotifier.addListener(_scrollToCurrentMeasure);
+    });
+  }
+
+  void _scrollToCurrentMeasure() {
+    final notifier = Provider.of<MusicPlayNotifier>(context, listen: false);
+
+    final double targetOffset = notifier.measureIndex * _cardWidth;
+
+    _scrollController.animateTo(
+      targetOffset,
+      duration: const Duration(milliseconds: 400), // سرعت انیمیشن
+      curve: Curves.easeInOut, // نوع انیمیشن
+    );
   }
 
   @override
   void dispose() {
-    // Clean up the notifier when the screen is disposed
-    Provider.of<MusicPlayNotifier>(context, listen: false).stop();
+    final musicPlayNotifier =
+        Provider.of<MusicPlayNotifier>(context, listen: false);
+    musicPlayNotifier.removeListener(_scrollToCurrentMeasure);
+    _scrollController.dispose();
+    musicPlayNotifier.stop();
     super.dispose();
   }
 
@@ -44,17 +66,17 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
               Widget? child) {
             return Column(
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    children: musicPlayNotifier.measures
-                        .asMap()
-                        .entries
-                        .map((measure) => MeasureCard(
-                              measureIndex: measure.key,
-                            ))
-                        .toList(),
+                SizedBox(
+                  height: 150.0,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    itemCount: musicPlayNotifier.measures.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        MeasureCard(
+                      measureIndex: index,
+                    ),
                   ),
                 ),
                 Padding(
