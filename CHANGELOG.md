@@ -8,6 +8,9 @@
 - add music player model in heart of logics to control play scanned music
 - add abastract class of music elements and corresponding subcalsses(Note, Rest, Clef, TimeSigniture, KeySigniture)
 - add bpmController custom widget
+- add scroll for measures are playing
+- show playing measure with a different color
+- show playing note with a different color
 
 ## [1.0.1.0] - 2025-05-21
 
