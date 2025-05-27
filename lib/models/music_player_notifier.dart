@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:sol/models/measure.dart';
+import 'package:sol/models/midi_player.dart';
 import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 
 class MusicPlayNotifier extends ChangeNotifier {
@@ -12,7 +13,12 @@ class MusicPlayNotifier extends ChangeNotifier {
 
   bool get isPlaying => _isPlaying;
 
+  MidiPlayer get midiPlayer => MidiPlayer();
+
+  
+
   Future<void> play({required int bpm}) async {
+    await midiPlayer.loadSoundfont();
     if (_isPlaying) return;
     _isPlaying = true;
     notifyListeners();

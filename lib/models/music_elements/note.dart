@@ -1,8 +1,23 @@
+import 'package:sol/models/midi_player.dart';
 import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 
 class Note extends PlayableMusicElement {
   Note(super.type, super.value, super.representation, super.measureOffset,
       super.pitch, super.duration, super.durationType, super.name);
+
+  MidiPlayer get midiPlayer => MidiPlayer();
+
+  @override
+  play() {
+    midiPlayer.playNote(pitch!.toInt());
+    super.play();
+  }
+
+  @override
+  stop() {
+    midiPlayer.stopNote(pitch!.toInt());
+    super.stop();
+  }
 
   static Note fromJson(Map<String, dynamic> json) => Note(
         json['type'],

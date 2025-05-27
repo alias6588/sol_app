@@ -180,13 +180,7 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
               // --- Display File Name and Status ---
               if (_isLoading) CircularProgressIndicator(),
               SizedBox(height: 10),
-              Text(
-                _selectedFile != null
-                    ? 'فایل انتخاب شده: ${p.basename(_selectedFile!.path)}' // Selected file:
-                    : '',
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
+
               Text(
                 _statusMessage,
                 textAlign: TextAlign.center,
