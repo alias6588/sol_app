@@ -9,14 +9,16 @@ class Note extends PlayableMusicElement {
 
   @override
   play() {
-    midiPlayer.playNote(pitch!.toInt());
     super.play();
+    midiPlayer.playNote(pitch!.toInt());
+    print('Playing note: $name, Pitch: $pitch, Duration: $duration');
   }
 
   @override
   stop() {
-    midiPlayer.stopNote(pitch!.toInt());
     super.stop();
+    midiPlayer.stopNote(pitch!.toInt());
+    print('Stopping note: $name, Pitch: $pitch');
   }
 
   static Note fromJson(Map<String, dynamic> json) => Note(

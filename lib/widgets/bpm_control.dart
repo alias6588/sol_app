@@ -7,7 +7,7 @@ class BpmControl extends StatefulWidget {
   const BpmControl({
     super.key,
     this.minBpm = 30,
-    this.maxBpm = 300,
+    this.maxBpm = 240,
     this.onBpmChanged,
   });
 

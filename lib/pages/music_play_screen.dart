@@ -84,44 +84,56 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                   child: Center(
                     child: BpmControl(
                       minBpm: 20,
-                      maxBpm: 120,
+                      maxBpm: 240,
                       onBpmChanged: (bpm) {
                         _currentBpm = bpm;
                       },
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Center the buttons
-                  children: [
-                    ElevatedButton(
-                      onPressed: musicPlayNotifier.isPlaying
-                          ? null // Disable button if already playing
-                          : () {
-                              musicPlayNotifier.play(bpm: _currentBpm);
-                            },
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(16),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center, // Center the buttons
+                    children: [
+                      ElevatedButton(
+                        onPressed: musicPlayNotifier.isPlaying
+                            ? null // Disable button if already playing
+                            : () {
+                                musicPlayNotifier.play(bpm: _currentBpm);
+                              },
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(16),
+                        ),
+                        child: const Icon(Icons.play_arrow),
                       ),
-                      child: const Icon(Icons.play_arrow),
-                    ),
-                    const SizedBox(width: 16), // Add some spacing
-                    ElevatedButton(
-                      onPressed: musicPlayNotifier.isPlaying
-                          ? () {
-                              musicPlayNotifier.stop();
-                            }
-                          : null, // Disable if not playing
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(16),
+                      const SizedBox(width: 16), // Add some spacing
+                      ElevatedButton(
+                        onPressed: musicPlayNotifier.isPlaying
+                            ? () {
+                                musicPlayNotifier.stop();
+                              }
+                            : null, // Disable if not playing
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(16),
+                        ),
+                        child: const Icon(Icons.stop),
                       ),
-                      child: const Icon(Icons.stop),
-                    ),
-                  ],
-                )
+                      const Spacer(flex: 1),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          musicPlayNotifier.stop();
+                          Navigator.of(context).pushNamed('/practice');
+                        },
+                        icon: const Icon(Icons.school),
+                        label: const Text('رفتن به صفحه تمرین'),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           },

@@ -29,7 +29,6 @@ class MusicPlayNotifier extends ChangeNotifier {
       final measure = measures[i];
       measureIndex = i;
       measure.isPlaying = true;
-      notifyListeners();
       for (int j = 0; j < measure.playableElements.length; j++) {
         if (!_isPlaying) break;
         final PlayableMusicElement element = measure.playableElements[j];

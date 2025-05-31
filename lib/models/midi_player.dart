@@ -21,6 +21,10 @@ class MidiPlayer {
 
   // --- Load SoundFont ---
   Future<void> loadSoundfont() async {
+    if (_soundfontId != null) {
+      // If soundfont is already loaded, no need to load it again
+      return;
+    }
     try {
       // Ensure the path to the sf2 file in assets and pubspec.yaml is correct
       final sf2Path =
