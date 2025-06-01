@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sol/models/music_player_notifier.dart';
+import 'package:sol/pages/practice_page.dart';
 import 'package:sol/widgets/bpm_control.dart';
 import 'package:sol/widgets/measure_card.dart';
 import 'package:provider/provider.dart';
@@ -126,7 +127,12 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                       ElevatedButton.icon(
                         onPressed: () {
                           musicPlayNotifier.stop();
-                          Navigator.of(context).pushNamed('/practice');
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PracticePage(),
+                              ));
                         },
                         icon: const Icon(Icons.school),
                         label: const Text('رفتن به صفحه تمرین'),

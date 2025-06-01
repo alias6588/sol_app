@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sol/models/midi_player.dart';
 import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 
@@ -11,14 +12,18 @@ class Note extends PlayableMusicElement {
   play() {
     super.play();
     midiPlayer.playNote(pitch!.toInt());
-    print('Playing note: $name, Pitch: $pitch, Duration: $duration');
+    if (kDebugMode) {
+      print('Playing note: $name, Pitch: $pitch, Duration: $duration');
+    }
   }
 
   @override
   stop() {
     super.stop();
     midiPlayer.stopNote(pitch!.toInt());
-    print('Stopping note: $name, Pitch: $pitch');
+    if (kDebugMode) {
+      print('Stopping note: $name, Pitch: $pitch');
+    }
   }
 
   static Note fromJson(Map<String, dynamic> json) => Note(

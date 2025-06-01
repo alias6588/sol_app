@@ -30,18 +30,15 @@ class MeasureCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 12),
-                SingleChildScrollView(
+                SizedBox(
+                  height: 40,
+                  child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: measure.playableElements
-                        .map((elemet) =>
-                                // Assuming each element has a 'noteName' property
-                                MusicElementCard(
-                                  musicElement: elemet,
-                                )
-                            // ignore: dead_code
-                            )
-                        .toList(),
+                  itemCount: measure.playableElements.length,
+                  itemBuilder: (context, index) {
+                    final element = measure.playableElements[index];
+                    return MusicElementCard(musicElement: element);
+                  },
                   ),
                 ),
               ],

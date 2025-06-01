@@ -16,10 +16,10 @@ class ImageSelectionScreen extends StatefulWidget {
   const ImageSelectionScreen({super.key});
 
   @override
-  _ImageSelectionScreenState createState() => _ImageSelectionScreenState();
+  ImageSelectionScreenState createState() => ImageSelectionScreenState();
 }
 
-class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
+class ImageSelectionScreenState extends State<ImageSelectionScreen> {
   File? _selectedFile;
   bool _isLoading = false;
   String _statusMessage =
@@ -32,19 +32,25 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
   void initState() {
     super.initState();
     if (_backendUrl == null || _backendUrl!.isEmpty) {
+      // WidgetsBinding.instance.addPostFrameCallback schedules a callback for after the frame.
+      // This is an async gap.
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          _statusMessage =
-              'آدرس سرور تنظیم نشده است.'; // Backend URL is not set.
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'آدرس سرور تنظیم نشده است. لطفاً فایل .env را بررسی کنید.', // Backend URL is not set. Please check the .env file.
-              textDirection: TextDirection.rtl,
+        // Check if the widget is still in the tree.
+        if (mounted) {
+          // <--- این بررسی اضافه شده است
+          setState(() {
+            _statusMessage =
+                'آدرس سرور تنظیم نشده است.'; // Backend URL is not set.
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'آدرس سرور تنظیم نشده است. لطفاً فایل .env را بررسی کنید.', // Backend URL is not set. Please check the .env file.
+                textDirection: TextDirection.rtl,
+              ),
             ),
-          ),
-        );
+          );
+        }
       });
     }
   }
@@ -125,26 +131,35 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
               // --- File Selection Button ---
               ElevatedButton.icon(
                 icon: Icon(Icons.music_note),
-                label: Text('انتخاب فایل نت موسیقی'), // Select Music Sheet File
+                label: Text('انتخاب فایل نت موسیقی'),
                 onPressed: _isLoading
                     ? null
                     : () async {
                         try {
                           var file = await _pickUpFile();
+                          // After an await, always check if the widget is still mounted
+                          // before calling setState or using context.
+                          if (!mounted) return; // <--- بررسی اضافه شده
+
                           setState(() {
                             _isLoading = true;
                             _selectedFile = file;
                             _statusMessage =
-                                'فایل انتخاب شد: ${p.basename(file.path)}'; // File selected: filename
+                                'فایل انتخاب شد: ${p.basename(file.path)}';
                           });
 
                           var measures = await uploadFile();
+                          if (!mounted) return; // <--- بررسی اضافه شده
+
                           setState(() {
                             _isLoading = false;
-                            _statusMessage =
-                                'پردازش کامل شد. آماده پخش.'; // Processing complete. Ready to play.
+                            _statusMessage = 'پردازش کامل شد. آماده پخش.';
                           });
 
+                          // This existing check is good and correct.
+                          // No need to remove it, as it clearly groups context-dependent operations.
+                          // if (mounted) { // This check is effectively covered by `if (!mounted) return;` above
+                          // but keeping it for this block is fine and doesn't hurt.
                           Provider.of<MusicPlayNotifier>(context, listen: false)
                               .initialize(measures);
 
@@ -154,26 +169,31 @@ class _ImageSelectionScreenState extends State<ImageSelectionScreen> {
                               builder: (context) => MusicPlayScreen(),
                             ),
                           );
+                          // }
                         } on SelectFileException catch (e) {
+                          if (!mounted) return; // <--- بررسی اضافه شده
                           setState(() {
-                            _statusMessage =
-                                e.message; // File selection cancelled.
+                            _statusMessage = e.message;
                           });
                         } on PostFileException catch (e) {
+                          if (!mounted) return; // <--- بررسی اضافه شده
                           setState(() {
-                            _statusMessage =
-                                e.message; // Error processing file.
+                            _statusMessage = e.message;
                           });
                         } on Exception catch (e) {
+                          if (!mounted) return; // <--- بررسی اضافه شده
                           setState(() {
-                            _statusMessage = '$e'; // File selection cancelled.
+                            _statusMessage = '$e';
                           });
                         } finally {
-                          setState(() {
-                            _isLoading = false; // Reset loading state
-                          });
+                          if (mounted) {
+                            // <--- بررسی اضافه شده (حتی اگر setState خودش چک می‌کند)
+                            setState(() {
+                              _isLoading = false; // Reset loading state
+                            });
+                          }
                         }
-                      }, // Disable during loading
+                      },
               ),
               SizedBox(height: 10),
 
