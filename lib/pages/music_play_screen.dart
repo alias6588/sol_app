@@ -20,7 +20,7 @@ class MusicPlayScreen extends StatefulWidget {
 
 class _MusicPlayScreenState extends State<MusicPlayScreen> {
   int _currentBpm = 60; // Default BPM
-  static const double _cardWidth = 200.0;
+  static const double _cardWidth = 220.0;
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -35,9 +35,14 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
   }
 
   void _scrollToCurrentMeasure() {
+    if (!_scrollController.hasClients) return;
+
     final notifier = Provider.of<MusicPlayNotifier>(context, listen: false);
 
     final double targetOffset = notifier.measureIndex * _cardWidth;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+
+    if (targetOffset > maxScroll) return;
 
     _scrollController.animateTo(
       targetOffset,
@@ -76,7 +81,7 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                     itemCount: musicPlayNotifier.measures.length,
                     itemBuilder: (BuildContext context, int index) =>
                         MeasureCard(
-                      measureIndex: index,
+                      measure: musicPlayNotifier.measures[index],
                     ),
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:sol/models/music_elements/abstracts/playable_music_element.dart'
 class MusicPlayNotifier extends ChangeNotifier {
   final List<Measure> measures;
   int measureIndex = 0;
+  int playingElementIndex = 0;
   bool _isPlaying = false;
 
   MusicPlayNotifier({required this.measures});
@@ -31,6 +32,7 @@ class MusicPlayNotifier extends ChangeNotifier {
       measure.isPlaying = true;
       for (int j = 0; j < measure.playableElements.length; j++) {
         if (!_isPlaying) break;
+        playingElementIndex = j;
         final PlayableMusicElement element = measure.playableElements[j];
         element.play();
         notifyListeners();
