@@ -6,7 +6,7 @@
 
 - add stop button
 - add music player model in heart of logics to control play scanned music
-- add abastract class of music elements and corresponding subcalsses(Note, Rest, Clef, TimeSigniture, KeySigniture)
+- add abstract class of music elements and corresponding subclasses(Note, Rest, Clef, TimeSignature, KeySignature)
 - add bpmController custom widget
 - add scroll for measures are playing
 - add scroll for notes are playing
