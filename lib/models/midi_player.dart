@@ -17,8 +17,6 @@ class MidiPlayer {
   // Variable to store the Soundfont ID
   int? _soundfontId;
 
-  // Variable to track the index of the currently playing note event
-
   // --- Load SoundFont ---
   Future<void> loadSoundfont() async {
     if (_soundfontId != null) {
