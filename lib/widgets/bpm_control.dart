@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class BpmControl extends StatefulWidget {
   final int minBpm;
   final int maxBpm;
+  final int initialBpm;
   final ValueChanged<int>? onBpmChanged; // <---
   const BpmControl({
     super.key,
     this.minBpm = 30,
     this.maxBpm = 240,
+    this.initialBpm = 60,
     this.onBpmChanged,
   });
 
@@ -21,7 +23,10 @@ class _BpmControlState extends State<BpmControl> {
   @override
   void initState() {
     super.initState();
-    _bpm = widget.maxBpm.clamp(widget.minBpm, widget.maxBpm);
+    _bpm = widget.initialBpm.clamp(widget.minBpm, widget.maxBpm);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onBpmChanged?.call(_bpm);
+    });
   }
 
   void _incrementBpm() {

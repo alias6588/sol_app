@@ -91,6 +91,7 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                     child: BpmControl(
                       minBpm: 20,
                       maxBpm: 240,
+                      initialBpm: _currentBpm,
                       onBpmChanged: (bpm) {
                         _currentBpm = bpm;
                       },
