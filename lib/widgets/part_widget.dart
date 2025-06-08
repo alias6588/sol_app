@@ -15,15 +15,20 @@ class PartWidget extends StatefulWidget {
 
 class _PartWidgetState extends State<PartWidget> {
   final ScrollController _scrollController = ScrollController();
+  late final MusicPlayNotifier _musicPlayNotifier;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _musicPlayNotifier = Provider.of<MusicPlayNotifier>(context, listen: false);
+  }
 
   @override
   void initState() {
     super.initState();
     // Initialize the MusicPlayNotifier with the provided measures
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final musicPlayNotifier =
-          Provider.of<MusicPlayNotifier>(context, listen: false);
-      musicPlayNotifier.addListener(_scrollToCurrentMeasure);
+      _musicPlayNotifier.addListener(_scrollToCurrentMeasure);
     });
   }
 
@@ -47,11 +52,9 @@ class _PartWidgetState extends State<PartWidget> {
 
   @override
   void dispose() {
-    final musicPlayNotifier =
-        Provider.of<MusicPlayNotifier>(context, listen: false);
-    musicPlayNotifier.removeListener(_scrollToCurrentMeasure);
+    _musicPlayNotifier.removeListener(_scrollToCurrentMeasure);
     _scrollController.dispose();
-    musicPlayNotifier.stop();
+    _musicPlayNotifier.stop();
     super.dispose();
   }
 
