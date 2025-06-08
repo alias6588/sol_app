@@ -32,17 +32,20 @@ class MusicPlayNotifier extends ChangeNotifier {
         .map((part) => part.measures.length)
         .reduce((a, b) => a > b ? a : b);
 
-    for (int i = 0; i < measureSize; i++) {
+    for (int i = 0; i < measureSize && _isPlaying; i++) {
+      measureIndex = i;
+
+      final List<Future<void>> measureFutures = [];
       for (final part in parts) {
-        if (i < part.measures.length) {
-          measureIndex = i;
-          final measure = part.measures[i];
-
-          await _playMeasure(measure, beatDurationMs);
-
-          if (!_isPlaying) break;
-        }
         if (!_isPlaying) break;
+        if (i < part.measures.length) {
+          final measure = part.measures[i];
+          measureFutures.add(_playMeasure(measure, beatDurationMs));
+        }
+      }
+
+      if (measureFutures.isNotEmpty) {
+        await Future.wait(measureFutures);
       }
     }
 
