@@ -64,13 +64,15 @@ class MidiPlayer {
     if (_soundfontId == null) {
       throw NotFoundSoundFontIdException('شناسه فونت صدا یافت نشد.');
     }
+    final futures = <Future<void>>[];
     for (final pitch in pitches) {
-      await _flutterMidiPro.playNote(
+      futures.add(_flutterMidiPro.playNote(
         key: pitch,
         sfId: _soundfontId!,
         velocity: velocity,
-      );
+      ));
     }
+    await Future.wait(futures);
   }
 
   /// Stops a chord (multiple pitches) at once.
@@ -78,11 +80,13 @@ class MidiPlayer {
     if (_soundfontId == null) {
       throw NotFoundSoundFontIdException('شناسه فونت صدا یافت نشد.');
     }
+    final futures = <Future<void>>[];
     for (final pitch in pitches) {
-      await _flutterMidiPro.stopNote(
+      futures.add(_flutterMidiPro.stopNote(
         key: pitch,
         sfId: _soundfontId!,
-      );
+      ));
     }
+    await Future.wait(futures);
   }
 }
