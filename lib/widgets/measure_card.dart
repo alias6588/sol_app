@@ -14,22 +14,25 @@ class MeasureCard extends StatefulWidget {
 }
 
 class _MeasureCardState extends State<MeasureCard> {
+  late final MusicPlayNotifier _musicPlayNotifier;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _musicPlayNotifier = Provider.of<MusicPlayNotifier>(context, listen: false);
+  }
+
   @override
   initState() {
     super.initState();
     // Initialize any state or variables if needed
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final musicPlayNotifier =
-          Provider.of<MusicPlayNotifier>(context, listen: false);
-      musicPlayNotifier.addListener(_scrollToPosition);
+      _musicPlayNotifier.addListener(_scrollToPosition);
     });
   }
 
   @override
   void dispose() {
-    final musicPlayNotifier =
-        Provider.of<MusicPlayNotifier>(context, listen: false);
-    musicPlayNotifier.removeListener(_scrollToPosition);
+    _musicPlayNotifier.removeListener(_scrollToPosition);
     _scrollController.dispose();
     super.dispose();
   }
