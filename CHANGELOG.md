@@ -2,7 +2,18 @@
 
 ## [Unrealized]
 
-## Add
+### Add
+
+- add part widget
+- add part model
+
+### Changed
+
+- bpm move to musicPlayNotifier
+
+## [1.0.2.0] 2025-06-07
+
+### Add
 
 - add stop button
 - add music player model in heart of logics to control play scanned music
