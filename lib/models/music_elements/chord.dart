@@ -16,11 +16,13 @@ class Chord extends PlayableMusicElement {
 
   @override
   void play() {
+    super.play();
     midiPlayer.playChord(pitches);
   }
 
   @override
   void stop() {
+    super.stop();
     midiPlayer.stopChord(pitches);
   }
 

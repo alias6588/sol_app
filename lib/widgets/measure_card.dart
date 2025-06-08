@@ -76,13 +76,13 @@ class _MeasureCardState extends State<MeasureCard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Measure ${widget.measure.measureNumber}',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            // Text(
+            //   'Measure ${widget.measure.measureNumber}',
+            //   style: Theme.of(context).textTheme.titleMedium,
+            // ),
             const SizedBox(height: 12),
             SizedBox(
-              height: 40.0,
+              height: 35.0,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 controller: _scrollController,

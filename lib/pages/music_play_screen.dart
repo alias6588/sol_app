@@ -10,8 +10,6 @@ import 'package:sol/widgets/part_widget.dart';
 class MusicPlayScreen extends StatelessWidget {
   // Simulate fetching required measures
 
- 
-
   const MusicPlayScreen({super.key});
   // Default BPM
   @override
@@ -29,25 +27,20 @@ class MusicPlayScreen extends StatelessWidget {
                   (part) => PartWidget(part: part),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Center(
-                    child: BpmControl(
-                      minBpm: 20,
-                      maxBpm: 240,
-                      initialBpm: musicPlayNotifier.currentBpm,
-                      onBpmChanged: (bpm) {
-                        //todo: Update the BPM in the notifier
-                        musicPlayNotifier.updateBpm(bpm);
-                      },
-                    ),
-                  ),
-                ),
-                Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment:
                         MainAxisAlignment.center, // Center the buttons
                     children: [
+                      BpmControl(
+                        minBpm: 20,
+                        maxBpm: 240,
+                        initialBpm: musicPlayNotifier.currentBpm,
+                        onBpmChanged: (bpm) {
+                          //todo: Update the BPM in the notifier
+                          musicPlayNotifier.updateBpm(bpm);
+                        },
+                      ),
                       ElevatedButton(
                         onPressed: musicPlayNotifier.isPlaying
                             ? null // Disable button if already playing

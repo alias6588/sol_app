@@ -61,7 +61,7 @@ class _PartWidgetState extends State<PartWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150.0,
+      height: 120.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         controller: _scrollController,
