@@ -69,7 +69,7 @@ class MusicPlayNotifier extends ChangeNotifier {
       element.play();
       notifyListeners();
       final durationMs = element.duration * beatDurationMs;
-      Future.delayed(Duration(milliseconds: durationMs.round()));
+      await Future.delayed(Duration(milliseconds: durationMs.round()));
       element.stop();
       notifyListeners();
     }

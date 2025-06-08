@@ -16,16 +16,12 @@ class Chord extends PlayableMusicElement {
 
   @override
   void play() {
-    for (final pitch in pitches) {
-      midiPlayer.playNote(pitch);
-    }
+    midiPlayer.playChord(pitches);
   }
 
   @override
   void stop() {
-    for (final pitch in pitches) {
-      midiPlayer.stopNote(pitch);
-    }
+    midiPlayer.stopChord(pitches);
   }
 
   factory Chord.fromJson(Map<String, dynamic> json) {

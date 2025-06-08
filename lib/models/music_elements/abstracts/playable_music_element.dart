@@ -21,14 +21,18 @@ abstract class PlayableMusicElement extends MusicElement {
   void play() {
     isPlaying = true;
     if (kDebugMode) {
-      print('Playing note: $name, Pitch: $pitch, Duration: $duration');
+      final now = DateTime.now();
+      print(
+        '[${now.toIso8601String().split('T')[1]}] Playing note: $name, Pitch: $pitch, Duration: $duration'
+      );
     }
   }
 
   void stop() {
     isPlaying = false;
     if (kDebugMode) {
-      print('Stopping note: $name, Pitch: $pitch');
+      final now = DateTime.now();
+      print('[${now.toIso8601String().split('T')[1]}] Stopping note: $name, Pitch: $pitch');
     }
   }
 
