@@ -65,17 +65,37 @@ class MusicPlayNotifier extends ChangeNotifier {
 
   Future<void> _playMeasure(Measure measure, int beatDurationMs) async {
     measure.isPlaying = true;
-    for (int j = 0; j < measure.playableElements.length; j++) {
-      if (!_isPlaying) break;
-      playingElementIndex = j;
-      final PlayableMusicElement element = measure.playableElements[j];
-      element.play();
-      notifyListeners();
-      final durationMs = element.duration * beatDurationMs;
-      await Future.delayed(Duration(milliseconds: durationMs.round()));
-      element.stop();
-      notifyListeners();
+
+    final elements = List<PlayableMusicElement>.from(measure.playableElements)
+      ..sort((a, b) =>
+          ((a.measureOffset ?? 0).compareTo(b.measureOffset ?? 0)));
+
+    final List<Future<void>> elementFutures = [];
+
+    for (final element in elements) {
+      final index = measure.playableElements.indexOf(element);
+      final startMs =
+          ((element.measureOffset ?? 0) * beatDurationMs).round();
+      final durationMs = (element.duration * beatDurationMs).round();
+
+      elementFutures.add(Future(() async {
+        await Future.delayed(Duration(milliseconds: startMs));
+        if (!_isPlaying) return;
+
+        playingElementIndex = index;
+        element.play();
+        notifyListeners();
+
+        await Future.delayed(Duration(milliseconds: durationMs));
+        element.stop();
+        notifyListeners();
+      }));
     }
+
+    if (elementFutures.isNotEmpty) {
+      await Future.wait(elementFutures);
+    }
+
     measure.isPlaying = false;
     notifyListeners();
   }
