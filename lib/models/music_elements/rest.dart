@@ -8,19 +8,19 @@ class Rest extends PlayableMusicElement {
   get name => 'Rest';
 
   static Rest fromJson(Map<String, dynamic> json) {
-    var type = json['type'];
-    if (type == null) {
-      throw Exception('Invalid JSON: $json');
+    try {
+      return Rest(
+        json['type'],
+        json['value'],
+        json['representation'],
+        json['measureOffset']?.toDouble(),
+        json['pitch'],
+        json['duration']?.toDouble(),
+        json['durationType'],
+        json['name'] ?? json['type'] ?? 'Rest',
+      );
+    } catch (e) {
+      throw FormatException('Failed to parse Rest from JSON: $e');
     }
-    return Rest(
-      json['type'],
-      json['value'],
-      json['representation'],
-      json['measureOffset']?.toDouble(),
-      json['pitch'],
-      json['duration']?.toDouble(),
-      json['durationType'],
-      json['name'] ?? type,
-    );
   }
 }

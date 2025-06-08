@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:sol/models/music_elements/abstracts/musice_element.dart';
 
 abstract class PlayableMusicElement extends MusicElement {
@@ -19,10 +20,16 @@ abstract class PlayableMusicElement extends MusicElement {
 
   void play() {
     isPlaying = true;
+    if (kDebugMode) {
+      print('Playing note: $name, Pitch: $pitch, Duration: $duration');
+    }
   }
 
   void stop() {
     isPlaying = false;
+    if (kDebugMode) {
+      print('Stopping note: $name, Pitch: $pitch');
+    }
   }
 
   @override

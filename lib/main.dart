@@ -11,7 +11,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
   runApp(ChangeNotifierProvider(
-      create: (context) => MusicPlayNotifier(measures: []),
+      create: (context) => MusicPlayNotifier(parts: []),
       child: const MyApp()));
 }
 

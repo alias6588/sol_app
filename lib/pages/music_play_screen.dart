@@ -2,65 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:sol/models/music_player_notifier.dart';
 import 'package:sol/pages/practice_page.dart';
 import 'package:sol/widgets/bpm_control.dart';
-import 'package:sol/widgets/measure_card.dart';
 import 'package:provider/provider.dart';
+import 'package:sol/widgets/part_widget.dart';
 
 // Custom widget to display a measure
 
-class MusicPlayScreen extends StatefulWidget {
-  const MusicPlayScreen({
-    super.key,
-  });
-
+class MusicPlayScreen extends StatelessWidget {
   // Simulate fetching required measures
 
-  @override
-  State<MusicPlayScreen> createState() => _MusicPlayScreenState();
-}
+ 
 
-class _MusicPlayScreenState extends State<MusicPlayScreen> {
-  int _currentBpm = 60; // Default BPM
-  static const double _cardWidth = 220.0;
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the MusicPlayNotifier with the provided measures
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final musicPlayNotifier =
-          Provider.of<MusicPlayNotifier>(context, listen: false);
-      musicPlayNotifier.addListener(_scrollToCurrentMeasure);
-    });
-  }
-
-  void _scrollToCurrentMeasure() {
-    if (!_scrollController.hasClients) return;
-
-    final notifier = Provider.of<MusicPlayNotifier>(context, listen: false);
-
-    final double targetOffset = notifier.measureIndex * _cardWidth;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-
-    if (targetOffset > maxScroll) return;
-
-    _scrollController.animateTo(
-      targetOffset,
-      duration: const Duration(milliseconds: 400), // سرعت انیمیشن
-      curve: Curves.easeInOut, // نوع انیمیشن
-    );
-  }
-
-  @override
-  void dispose() {
-    final musicPlayNotifier =
-        Provider.of<MusicPlayNotifier>(context, listen: false);
-    musicPlayNotifier.removeListener(_scrollToCurrentMeasure);
-    _scrollController.dispose();
-    musicPlayNotifier.stop();
-    super.dispose();
-  }
-
+  const MusicPlayScreen({super.key});
+  // Default BPM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,18 +25,8 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
               Widget? child) {
             return Column(
               children: [
-                SizedBox(
-                  height: 150.0,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    controller: _scrollController,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    itemCount: musicPlayNotifier.measures.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        MeasureCard(
-                      measure: musicPlayNotifier.measures[index],
-                    ),
-                  ),
+                ...musicPlayNotifier.parts.map(
+                  (part) => PartWidget(part: part),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -91,9 +34,10 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                     child: BpmControl(
                       minBpm: 20,
                       maxBpm: 240,
-                      initialBpm: _currentBpm,
+                      initialBpm: musicPlayNotifier.currentBpm,
                       onBpmChanged: (bpm) {
-                        _currentBpm = bpm;
+                        //todo: Update the BPM in the notifier
+                        musicPlayNotifier.updateBpm(bpm);
                       },
                     ),
                   ),
@@ -108,7 +52,7 @@ class _MusicPlayScreenState extends State<MusicPlayScreen> {
                         onPressed: musicPlayNotifier.isPlaying
                             ? null // Disable button if already playing
                             : () {
-                                musicPlayNotifier.play(bpm: _currentBpm);
+                                musicPlayNotifier.play();
                               },
                         style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),

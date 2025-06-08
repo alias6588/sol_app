@@ -8,8 +8,8 @@ import 'package:path/path.dart' as p; // For getting basename
 import 'package:provider/provider.dart';
 import 'package:sol/exceptions/post_file_exception.dart';
 import 'package:sol/exceptions/select_file_exception.dart';
-import 'package:sol/models/measure.dart' as measure_model show Measure;
 import 'package:sol/models/music_player_notifier.dart';
+import 'package:sol/models/part.dart';
 import 'package:sol/pages/music_play_screen.dart';
 
 class ImageSelectionScreen extends StatefulWidget {
@@ -67,7 +67,7 @@ class ImageSelectionScreenState extends State<ImageSelectionScreen> {
     }
   }
 
-  Future<List<measure_model.Measure>> uploadFile() async {
+  Future<List<Part>> uploadFile() async {
     String errorMessage =
         'خطا در پردازش فایل در سرور.'; // Error processing file on server.
     try {
@@ -91,10 +91,10 @@ class ImageSelectionScreenState extends State<ImageSelectionScreen> {
         // Processing was successful
         List<dynamic> decodedData = jsonDecode(response.body);
         // Convert List<dynamic> to List<NoteEvent>
-        List<measure_model.Measure> measures = decodedData
-            .map((data) => measure_model.Measure.fromJson(data))
+        List<Part> parts = decodedData
+            .map((data) => Part.fromJson(data))
             .toList();
-        return measures;
+        return parts;
 
         // Navigate to the MusicPlayerScreen with the note data
       } else {
@@ -148,7 +148,7 @@ class ImageSelectionScreenState extends State<ImageSelectionScreen> {
                                 'فایل انتخاب شد: ${p.basename(file.path)}';
                           });
 
-                          var measures = await uploadFile();
+                          var parts = await uploadFile();
                           if (!mounted) return; // <--- بررسی اضافه شده
 
                           setState(() {
@@ -161,7 +161,7 @@ class ImageSelectionScreenState extends State<ImageSelectionScreen> {
                           // if (mounted) { // This check is effectively covered by `if (!mounted) return;` above
                           // but keeping it for this block is fine and doesn't hurt.
                           Provider.of<MusicPlayNotifier>(context, listen: false)
-                              .initialize(measures);
+                              .initialize(parts);
 
                           Navigator.push(
                             context,

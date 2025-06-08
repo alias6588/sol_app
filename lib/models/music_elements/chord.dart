@@ -1,38 +1,59 @@
 import 'package:sol/models/midi_player.dart';
-import 'package:sol/models/music_elements/abstracts/musice_element.dart';
 import 'package:sol/models/music_elements/abstracts/playable_music_element.dart';
 
 class Chord extends PlayableMusicElement {
-  final List<String> notes;
+  final String pitchedCommonName;
+  final List<String> names;
+  final List<int> pitches;
 
   Chord(super.type, super.value, super.representation, super.measureOffset,
-      super.pitch, super.duration, super.durationType, super.name, this.notes);
+      super.pitch, super.duration, super.durationType, super.name,
+      {required this.pitchedCommonName,
+      required this.names,
+      required this.pitches});
 
   MidiPlayer get midiPlayer => MidiPlayer();
 
   @override
   void play() {
-    for (final note in notes) {
-      midiPlayer.playNote(int.parse(note));
+    for (final pitch in pitches) {
+      midiPlayer.playNote(pitch);
     }
   }
 
   @override
   void stop() {
-    for (final note in notes) {
-      midiPlayer.stopNote(int.parse(note));
+    for (final pitch in pitches) {
+      midiPlayer.stopNote(pitch);
     }
   }
 
-  static MusicElement fromJson(Map<String, dynamic> json) => Chord(
+  factory Chord.fromJson(Map<String, dynamic> json) {
+    try {
+      return Chord(
         json['type'],
         json['value'],
         json['representation'],
-        json['measureOffset']?.toDouble(),
+        json['measureOffset'].toDouble(),
         json['pitch'],
-        json['duration']?.toDouble(),
+        json['duration'].toDouble(),
         json['durationType'],
-        json['name'],
-        List<String>.from(json['notes']),
+        json['name'] ??
+            json['names']?.reduce((a, b) => '$a$b') ??
+            json['pitched_common_name'] ??
+            '',
+        pitchedCommonName: json['pitched_common_name'] as String? ?? '',
+        names: (json['names'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            [],
+        pitches: (json['pitches'] as List<dynamic>?)
+                ?.map((e) => e as int)
+                .toList() ??
+            [],
       );
+    } catch (e) {
+      throw FormatException('Failed to parse Chord from JSON: $e');
+    }
+  }
 }
